@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+    <link href="./output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col items-center">
+    <header class="flex gap-8 p-4">
+        <a href="/public"
+            class="text-blue-500 hover:text-white hover:bg-blue-500 px-4 py-2 rounded-lg border-2 border-transparent hover:border-blue-500 transition duration-300">Public
+            page</a>
+        <a href="/protected"
+            class="text-blue-500 hover:text-white hover:bg-blue-500 px-4 py-2 rounded-lg border-2 border-transparent hover:border-blue-500 transition duration-300">Protected
+            page</a>
+    </header>
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 mt-8">
+        <h1 class="text-3xl font-semibold text-center mb-6">Upload File</h1>
+        <form action="/" enctype="multipart/form-data" method="post" class="space-y-4">
+            <div class="flex items-center gap-2">
+                <label for="private" class="text-sm text-gray-700">Private:</label>
+                <input type="checkbox" name="private" id="private" class="w-4 h-4 border-gray-300 rounded-md">
+            </div>
+            <div>
+                <input type="file" name="upload"
+                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="text-center">
+                <button type="submit"
+                    class="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <a href="/logout" class="text-center text-red-500 hover:text-red-700 mt-4 hover:underline transition duration-300">
+        <p>Logout</p>
+    </a>
+</body>
+
+</html>

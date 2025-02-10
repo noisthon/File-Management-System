@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public</title>
+    <link href="./output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col items-center">
+    <header class="flex gap-8 p-4 ">
+        <a href="/"
+            class="text-blue-500 hover:text-white hover:bg-blue-500 px-4 py-2 rounded-lg border-2 border-transparent hover:border-blue-500 transition duration-300">Add-File
+            Page</a>
+        <a href="/protected"
+            class="text-blue-500 hover:text-white hover:bg-blue-500 px-4 py-2 rounded-lg border-2 border-transparent hover:border-blue-500 transition duration-300">Protected
+            Page</a>
+    </header>
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 mt-8">
+        <h1 class="text-3xl font-semibold text-center mb-6">Viesai patalpinti failai</h1>
+
+        <input id="Search" type="text" placeholder="Search..."
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6">
+
+        <!-- Table Section -->
+        <table class="w-full table-auto border-collapse mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 text-left font-medium text-gray-700">Nr</th>
+                    <th class="px-4 py-2 text-left font-medium text-gray-700">File-Name</th>
+                    <th class="px-4 py-2 text-left font-medium text-gray-700">View</th>
+                    <th class="px-4 py-2 text-left font-medium text-gray-700">Download</th>
+                </tr>
+            </thead>
+            <tbody id="file-list" class="divide-y divide-gray-200">
+
+            </tbody>
+        </table>
+
+        <a href="/logout"
+            class="text-center text-red-500 hover:text-red-700 mt-4 hover:underline transition duration-300">
+            <p>Logout</p>
+        </a>
+    </div>
+
+    <script>
+        let allFiles = [];
+
+        async function loadList() {
+            const response = await fetch("/all-public-files");
+            allFiles = await response.json();
+            renderList(allFiles);
+        }
+
+        function renderList(files) {
+            const fileListElement = document.getElementById('file-list');
+            fileListElement.innerHTML = "";
+
+            files.forEach((file, index) => {
+                const row = `
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-4 py-2">${index + 1}</td>
+                        <td class="px-4 py-2">${file}</td>
+                        <td class="px-4 py-2"><a href="/public/${file}" class="text-blue-500 hover:text-blue-700">View</a></td>
+                        <td class="px-4 py-2"><a href="/public/${file}" download class="text-blue-500 hover:text-blue-700">Download</a></td>
+                    </tr>
+                `;
+                fileListElement.innerHTML += row;
+            });
+        }
+
+        const searchInput = document.getElementById('Search');
+        searchInput.addEventListener("input", () => {
+            const toLower = searchInput.value.toLowerCase();
+            const filteredInput = allFiles.filter(file => file.toLowerCase().includes(toLower));
+            renderList(filteredInput);
+        });
+
+        loadList();
+    </script>
+</body>
+
+</html>
